@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Posts{% endblock %}
+{% block style %}
+body{
+  background-image: url("{% static 'images/post1.jpg'%}");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+{% endblock %}
+
+{% block body %}
+
+<h3 class="text-white p-2"> Total numbers of posts are {{ count }}</h3>
+  {% for i in posts %}
+  <div class="row p-3 m-3">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 jumbotron">
+        <div class="card">
+            <div class="card-header">
+                  <p style="font-size: 50px">{{ i.title }}</p>
+                  <a class="d-flex" href="{% url 'delete_post' pk=i.pk %}">Delete this post</a>
+            </div>
+                <div class="card-body">
+                      <h4>{{ i.author }}</h4><br>
+                      <div class="ml-3">
+                          <p>{{ i.text }}</p>
+                          <p class="text-muted" style="font-size: 10px">{{ i.create_date }}</p>
+                      </div>
+                </div>
+            </div>
+            </div>
+  <div class="col-md-3"></div>
+  </div>
+  {% endfor %}
+{% endblock %}
