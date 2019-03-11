@@ -71,7 +71,7 @@ def search1(request):
 
              for i in range(0,len(courses)):
                  p.append(cp(courses[i],review[i],rating[i],price[i],website[i]))
-             return render(request,'home1.html',{"all":sorted(p,key=lambda x: x.rating,reverse=True)})
+             return render(request,'home1.html',{"all":p})
 
         else:
 

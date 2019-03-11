@@ -1,19 +1,82 @@
 <!-- chat/templates/chat/index.html -->
+{%load static%}
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Chat Rooms</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style media="screen">
+    body{
+      background-image: url("{% static 'images/bak1.jpg'%}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    .list-group-item{
+      background-color: #b1c3e0;
+    }
+
+    li:hover
+    {
+        background-color:green;
+  }
+    </style>
+
 </head>
 <body>
-    <p>welcome ,click for chatting</p><br>
-    {% for user in users%}
-       <h1 id="user">{{user}}</h1>
+  <div class="container">
 
-    <input onclick="myfunction('{{user}}')" type="button" value="Enter"/>
+
+    <h1>welcome ,click for chatting</h1><br>
+    </div>
+      <ul class="list-group">
+    {% for user in users%}
+    <div class="container" style=" margin-top: 20px">
+
+
+
+            <li class="list-group-item"onclick="myfunction('{{user}}')"  >
+              <div class="row">
+                <div class="col col-lg-2">
+                  <img style=" height: 120px; width:120px;border-radius: 50%; " src="{{user.photo.url}}" alt="not available">
+                </div>
+                <div class="col col-lg-4">
+                   <h1 id="user">{{user.first_name}}  {{user.last_name}}</h1>
+                     <p>{{user.bio}}</p>
+
+                </div>
+                <div class="col col-lg-3">
+
+                </div>
+                <div class="col col-lg-3">
+
+                </div>
+
+              </div>
+
+
+
+
+          </li>
+
+
+    </div>
 
 
     {%endfor%}
+        </ul>
     <script>
 
 

@@ -21,8 +21,8 @@
     <div id="sidepanel">
       <div id="profile">
         <div class="wrap">
-          <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-          <p>{{request.user}}</p>
+          <img style=" height:65px;width: 65px;border-radius: 50%;" id="profile-img" src="{{request.user.photo.url}}" class="online" alt="" />
+          <h3>   {{request.user}}</h3>
           <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
           <div id="status-options">
             <ul>
@@ -53,10 +53,10 @@
 
             <div class="wrap">
               <span class="contact-status online"></span>
-              <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+              <img style=" height:50px;width: 50px;border-radius: 50%;" src="{{user.photo.url}}" alt="" />
               <div class="meta">
                 <h5 class="name">{{user.username}}</h5>
-                <h6 class="preview">hm hain {{user.username}} sb milke bolo pkmkb </h6>
+                <h6 class="preview"> {{user.bio}} </h6>
 
               </div>
             </div>
@@ -73,8 +73,8 @@
     </div>
     <div class="content">
       <div class="contact-profile">
-        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-        <p id="selected" >{{use}}</p>
+        <img style=" height:50px;width: 50px;border-radius: 50%;" src="{{use.photo.url}}" alt="" />
+        <p id="selected" >{{use.username}}</p>
         <div class="social-media">
           <i class="fa fa-facebook" aria-hidden="true"></i>
           <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -84,12 +84,12 @@
       <div class="messages">
         <ul id="chat-log">
           {% comment %} <li class="sent">
-            <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-            <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
+            <img  src="{{request.user.photo.url}}" alt="" />
+            <p>?!</p>
           </li>
           <li class="replies">
-            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>When you're backed against the wall, break the god damn thing down.</p>
+            <img src="{{use.photo.url}}" alt="" />
+            <p>.</p>
           </li> {% endcomment %}
         </ul>
       </div>
@@ -320,7 +320,7 @@
       var imgTag = document.createElement('img');
       var pTag = document.createElement('p');
       pTag.textContent = data.content;
-      imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
+      imgTag.src = 'https://img.freepik.com/free-vector/message-notification-background_23-2147671665.jpg?size=338&ext=jpg';
 
       if (author === username) {
         msgListTag.className = 'sent';

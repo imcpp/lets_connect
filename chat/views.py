@@ -13,23 +13,27 @@ from .models import *
 
 @login_required
 def index(request):
-    users = User.objects.exclude(username=request.user)
+
+    users = User.objects.exclude(username=request.user).exclude(is_superuser=True)
 
     return render(request, 'chat/index.html', {
     'users': users,
     })
 
+
 @login_required
 def room(request, room_name):
     use1=room_name.split("-")
     use=use1[-1]
-    print(use)
-    users = User.objects.exclude(username=request.user)
+    #print(use)
+    detail=User.objects.get(username=use)
+    print(detail)
+    users = User.objects.exclude(username=request.user).exclude(is_superuser=True)
     return render(request, 'chat/room.html', {
         'room_name_json': mark_safe(json.dumps(use1[0])),
         'username': mark_safe(json.dumps(request.user.username)),
         'users': users,
-        'use':use,
+        'use':detail,
     })
 
 
@@ -45,7 +49,7 @@ def login(request):
 
             return redirect('post')
         else:
-            return render(request,'post.html',{'error':'username or password is incorrect'})
+            return render(request,'landing.html',{'error':'username or password is incorrect'})
     return render(request,'post.html')
 
 def logout(request):
@@ -58,7 +62,7 @@ def signup(request):
         if request.POST['password']==request.POST['password1'] :
                 try:
                     user=User.objects.get(username=request.POST['username'])
-                    return render(request,'post.html',{'error':'Username already exist !! Please choose a different one :'})
+                    return render(request,'landing.html',{'error':'Username already exist !! Please choose a different one :'})
                 except:
                     signup_data = request.POST.dict()
                     p = User()
@@ -76,11 +80,11 @@ def signup(request):
                     #auth.login(request,user)
                     #return HttpResponse('<h1>Home Page<h1>')
                     #return redirect('home')
-                    return render(request,'post.html',{'error':'signup successful !!'})
+                    return render(request,'landing.html',{'error':'signup successful !!'})
 
         else:
-            return render(request,'post.html',{'error':'password does not match'})
-    return redirect('index')
+            return render(request,'landing.html',{'error':'password does not match'})
+    return redirect('landing')
 
 
 @login_required
@@ -129,7 +133,8 @@ def search(request):
 
 @login_required
 def profile(request):
-    users = User.objects.all()
+    users = User.objects.exclude(username=request.user).exclude(is_superuser=True)
+
     #user=User.objects.filter(username=request.user)
     return render(request,"profile.html",{"users":users})
 
@@ -159,9 +164,12 @@ def delete_post(request, pk):
     p.delete()
     return redirect('user_post')
 def post(request):
-    p=Post.objects.all().order_by('-create_date')
-    users = User.objects.exclude(username=request.user)
-    return render(request, 'post.html', {'post':p,'users':users})
+    if request.user.is_authenticated:
+        p=Post.objects.all().order_by('-create_date')
+        users = User.objects.exclude(username=request.user)
+        return render(request, 'post.html', {'post':p,'users':users})
+    else:
+        return render(request,'landing.html')
 
 
 def add_comment(request, pk):

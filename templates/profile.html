@@ -10,17 +10,33 @@
 <link rel="stylesheet" href="{% static 'profile.css' %}" />
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <title></title>
+    <title>profile</title>
+    <style media="screen">
+      body{
+        background-image: url("{% static 'images/profile.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      .list-group-item{
+        background-color: #b1c3e0;
+      }
+
+      li:hover
+      {
+          background-color:green;
+    }
+    </style>
   </head>
   <body>
 
 <div class="container">
     <div class="fb-profile">
         <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example"/>
-        <img align="left" class="fb-image-profile thumbnail" src="https://scontent.fbho1-1.fna.fbcdn.net/v/t1.0-9/15780781_716713781821151_5466943418057592299_n.jpg?_nc_cat=102&_nc_ht=scontent.fbho1-1.fna&oh=3dfc11b6000d2213ba254d11689ed2e1&oe=5CDB5E27" alt="photo nhi aa rha h"/>
+        <img style=" height: 180px;"align="left" class="fb-image-profile thumbnail" src="{{request.user.photo.url}}" alt="photo nhi aa rha h"/>
         <div class="fb-profile-text">
-            <h1>{{request.user.username}}</h1>
-            <p>bhabhi hain tumhari.</p>
+            <h1>{{request.user}}</h1>
+            <p>{{request.user.bio}}</p>
         </div>
         <div id="button"class="btn-group btn-group-lg" role="group" aria-label="Basic example" >
           <button  onclick="myfuction('forprofile')" value="forprofile" type="button" class="btn btn-secondary">profile</button>
@@ -32,9 +48,9 @@
     <br><br><br>
   <div id="forprofile" style="">
 
-      <h1>{{request.user.username}}</h1>
-        <h1>{{request.user.email}}</h1>
-        <h1>{{request.user.enroll_no}}</h1>
+      <h1>Name:{{request.user}}</h1>
+        <h1>Email:{{request.user.email}}</h1>
+        <h1>Enroll:{{request.user.enroll_no}}</h1>
 
 
 
@@ -48,12 +64,44 @@
       </div>
       <div id="forfriends"style="display:none">
         <h1>Friends</h1>
-        {%for user in users %}
-        <img src="{{user.photo}}" alt="">
-          <h1>{{user.username}}</h1>
-          <h1>{{request.user.enroll_no}}</h1>
 
-        {%endfor%}
+
+            <ul class="list-group">
+          {% for user in users%}
+          <div class="container" style=" margin-top: 20px">
+
+
+
+                  <li class="list-group-item"onclick="myfunction('{{user}}')"  >
+                    <div class="row">
+                      <div class="col col-lg-4">
+                        <img style=" height: 80px; width:80px;border-radius: 50%; " src="{{user.photo.url}}" alt="not available">
+                      </div>
+                      <div class="col col-lg-4">
+                         <h1 id="user">{{user.first_name}}  {{user.last_name}}</h1>
+                           <p>{{user.bio}}</p>
+
+                      </div>
+                      <div class="col col-lg-4">
+
+                      </div>
+
+
+                    </div>
+
+
+
+
+                </li>
+
+
+          </div>
+
+
+          {%endfor%}
+              </ul>
+
+
 
       </div>
       <div id="forprojects"style="display:none">
@@ -88,5 +136,18 @@
 </script>
 
 
+  <script>
+
+
+      function myfunction(user) {
+          //var user=document.getElementById("user").innerHTML
+          var total="{{user}}"+user
+          var t=total.split("")
+          t.sort()
+          var u=t.join("")
+          //alert(u)
+          window.location.pathname = '/chat/' + u+'-'+user+ '/';
+      };
+  </script>
   </body>
 </html>

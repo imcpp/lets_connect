@@ -61,6 +61,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'justchat.wsgi.application'
 ASGI_APPLICATION = "justchat.routing.application"
+AUTH_USER_MODEL = 'chat.User'
 
 CHANNEL_LAYERS = {
     'default': {
@@ -114,6 +115,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -121,3 +128,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
